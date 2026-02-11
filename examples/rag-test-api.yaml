@@ -1,0 +1,48 @@
+---
+version: "1.0"
+name: "Create Simple REST API"
+description: "Example workflow to create a basic REST API with Express.js"
+
+config:
+  timeout: 30000
+  retries: 2
+  failFast: false
+
+steps:
+  - id: setup
+    name: "Initialize Node.js project"
+    agent: suggest
+    prompt: "Create a new Node.js project with package.json for an Express REST API"
+    output:
+      type: file
+      path: "package.json"
+
+  - id: install
+    name: "Install Express"
+    agent: suggest
+    prompt: "Add Express.js dependency to package.json"
+    output:
+      type: file
+      path: "package.json"
+
+  - id: create-server
+    name: "Create Express server"
+    agent: suggest
+    prompt: |
+      Create a simple Express server in server.js with:
+      - Basic setup
+      - A GET /api/health endpoint
+      - A GET /api/users endpoint (returns mock data)
+      - Error handling middleware
+      - Server listening on port 3000
+    output:
+      type: file
+      path: "server.js"
+
+  - id: create-readme
+    name: "Create README"
+    agent: suggest
+    prompt: "Create a README.md with setup instructions and API documentation"
+    output:
+      type: file
+      path: "README.md"

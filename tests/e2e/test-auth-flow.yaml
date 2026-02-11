@@ -1,0 +1,17 @@
+name: "Auth Check Test Workflow"
+version: "1.0.0"
+
+description: "Simple workflow to verify GitHub authentication works at startup"
+
+config:
+  timeout: 5000
+  retries: 1
+
+steps:
+  - id: simple-step
+    name: "Simple Test Step"
+    agent: github
+    prompt: "Just print hello"
+    output:
+      type: variable
+      name: test_result

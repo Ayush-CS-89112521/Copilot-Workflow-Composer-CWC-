@@ -1,0 +1,29 @@
+version: '1.0'
+name: Simple Demo Workflow
+description: A simple two-step workflow demonstrating workflow composition
+
+config:
+  timeout: 15000
+  retries: 1
+  failFast: true
+
+steps:
+  - id: step1
+    name: Generate Greeting
+    agent: suggest
+    prompt: "Generate a friendly greeting message for a developer learning about workflow automation"
+    output:
+      type: variable
+      name: greeting
+
+  - id: step2
+    name: Expand on Greeting
+    agent: suggest
+    prompt: |
+      Here's a greeting message:
+      ${steps.step1.greeting}
+      
+      Now generate a paragraph about how workflow automation can improve development productivity.
+    output:
+      type: file
+      path: output/productivity.txt

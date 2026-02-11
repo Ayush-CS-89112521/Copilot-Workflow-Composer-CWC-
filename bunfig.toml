@@ -1,0 +1,12 @@
+# Bun Configuration
+
+[install]
+# Use npm as the package manager
+backend = "npm"
+
+[test]
+# Test configuration
+root = "."
+
+[install.scopes]
+# Scoped package configuration (if needed)

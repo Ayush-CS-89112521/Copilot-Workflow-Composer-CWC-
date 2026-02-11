@@ -1,0 +1,71 @@
+version: '1.0'
+name: Code Review Assistant
+description: Multi-step workflow for comprehensive code analysis and improvement suggestions
+
+config:
+  timeout: 30000
+  retries: 2
+  failFast: true
+
+steps:
+  - id: analyze_code
+    name: Analyze Code Quality
+    agent: suggest
+    prompt: |
+      Analyze the following code for quality issues, performance problems, and best practices:
+      
+      ```javascript
+      function processData(arr) {
+        let result = [];
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] > 0) {
+            result.push(arr[i] * 2);
+          }
+        }
+        return result;
+      }
+      ```
+      
+      Provide specific recommendations in a structured format.
+    output:
+      type: variable
+      name: analysis_result
+
+  - id: generate_improvements
+    name: Generate Improved Code
+    agent: suggest
+    prompt: |
+      Based on this analysis:
+      ${steps.analyze_code.analysis_result}
+      
+      Generate the improved version of the code that addresses all issues mentioned.
+      Include comments explaining the improvements.
+    output:
+      type: variable
+      name: improved_code
+
+  - id: create_test_cases
+    name: Create Test Cases
+    agent: suggest
+    prompt: |
+      For the improved code:
+      ${steps.generate_improvements.improved_code}
+      
+      Generate comprehensive test cases using a JavaScript testing framework.
+      Include edge cases and error scenarios.
+    output:
+      type: file
+      path: test-cases.js
+
+  - id: create_documentation
+    name: Create Documentation
+    agent: explain
+    prompt: |
+      Explain the improved implementation:
+      ${steps.generate_improvements.improved_code}
+      
+      Create clear, concise documentation suitable for a development team,
+      including how to use the function and what it does.
+    output:
+      type: file
+      path: DOCUMENTATION.md

@@ -1,0 +1,146 @@
+version: '1.0'
+name: Advanced Code Refactoring Workflow
+description: |
+  End-to-end E2E test workflow for Copilot Workflow Composer.
+  Multi-step workflow that chains GitHub Copilot agents to analyze code,
+  plan refactoring, and generate improved implementation.
+  
+  Tests variable resolution, step chaining, and output persistence.
+
+config:
+  timeout: 60000      # 60 seconds per step (gh copilot can be slow)
+  retries: 1          # Retry once on failure
+  failFast: true      # Stop on first failure
+
+steps:
+  - id: analyze
+    name: Analyze Code for Error Handling Issues
+    agent: suggest
+    prompt: |
+      I have the following TypeScript utility file with poor error handling:
+      
+      ```typescript
+      // File: src/utils/math-helper.ts
+      export function calculateSquareRoot(num: number): number {
+        return Math.sqrt(num);
+      }
+      
+      export function divideNumbers(numerator: number, denominator: number): number {
+        return numerator / denominator;
+      }
+      
+      export function parseJsonData(jsonString: string): Record<string, unknown> {
+        return JSON.parse(jsonString);
+      }
+      
+      export async function fetchFromUrl(url: string): Promise<Response> {
+        return fetch(url);
+      }
+      
+      export function calculateAverage(numbers: number[]): number {
+        const sum = numbers.reduce((a, b) => a + b, 0);
+        return sum / numbers.length;
+      }
+      ```
+      
+      Please analyze these functions and identify all error handling issues:
+      1. Missing input validation
+      2. Unhandled edge cases (empty arrays, division by zero, etc.)
+      3. Unhandled exceptions (JSON parsing, network errors)
+      4. Missing null/undefined checks
+      5. Lack of proper error recovery
+      
+      Provide a structured analysis with function names and issues in JSON format.
+    output:
+      type: variable
+      name: analysis_result
+
+  - id: plan
+    name: Create Refactoring Plan
+    agent: suggest
+    prompt: |
+      Based on this error handling analysis:
+      
+      ${steps.analyze.analysis_result}
+      
+      Create a detailed refactoring plan in JSON format with the following structure:
+      
+      {
+        "refactoring_plan": [
+          {
+            "function_name": "functionName",
+            "current_issues": ["issue1", "issue2"],
+            "proposed_fixes": ["fix1", "fix2"],
+            "implementation_strategy": "description"
+          }
+        ],
+        "priority_order": ["function1", "function2"],
+        "estimated_effort": "high/medium/low"
+      }
+      
+      Ensure the plan is valid JSON that can be parsed programmatically.
+    output:
+      type: variable
+      name: plan_output
+
+  - id: generate_fix
+    name: Generate Improved Code
+    agent: suggest
+    prompt: |
+      Using this refactoring plan:
+      
+      ${steps.plan.plan_output}
+      
+      Generate improved TypeScript code for the first function in the priority order.
+      
+      Requirements:
+      1. Add comprehensive error handling (try-catch blocks, validation)
+      2. Add JSDoc comments explaining error handling
+      3. Include proper TypeScript type safety
+      4. Add example usage with error scenarios
+      5. Return only the complete, production-ready function code
+      
+      Format the output as a valid TypeScript code block.
+    output:
+      type: file
+      path: refactored-function.ts
+
+  - id: create_tests
+    name: Create Test Cases
+    agent: suggest
+    prompt: |
+      For the improved code:
+      
+      ${steps.generate_fix.output}
+      
+      Generate comprehensive Jest test cases that:
+      1. Test happy path scenarios
+      2. Test all error scenarios
+      3. Test edge cases (empty inputs, null values, boundary conditions)
+      4. Include tests for error messages
+      5. Use proper async/await patterns if needed
+      
+      Return valid JavaScript/TypeScript Jest test code.
+    output:
+      type: file
+      path: function-tests.test.ts
+
+  - id: document
+    name: Create Implementation Guide
+    agent: explain
+    prompt: |
+      Explain the improvements made in:
+      
+      ${steps.generate_fix.output}
+      
+      Create a comprehensive implementation guide that includes:
+      1. Summary of changes from original code
+      2. Error handling strategy explanation
+      3. How to integrate into existing codebase
+      4. Performance implications (if any)
+      5. Migration guide for existing callers
+      
+      Use clear, developer-friendly language.
+    output:
+      type: file
+      path: REFACTORING-GUIDE.md
