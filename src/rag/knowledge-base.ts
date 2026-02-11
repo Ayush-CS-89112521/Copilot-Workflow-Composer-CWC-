@@ -1,8 +1,11 @@
 /**
- * RAG Knowledge Base
+ * RAG Knowledge Base Engine
  * 
- * Manages vector embeddings and similarity search for workflow context.
- * Uses PostgreSQL with pgvector for efficient vector operations.
+ * Provides an intelligent persistence layer for workflow context retrieval.
+ * Features:
+ * - Hybrid storage: PostgreSQL with pgvector for production; SQLite/In-Memory for portability.
+ * - Semantic search: Vector-based similarity matching for error recovery and tool discovery.
+ * - Automatic indexing: Self-optimizing schema and IVFFlat index management.
  */
 
 import { Client } from 'pg';

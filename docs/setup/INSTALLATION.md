@@ -339,7 +339,7 @@ $batchContent | Out-File -FilePath "C:\Windows\cwc.bat" -Encoding ASCII -Force
 
 **Option A: Clone from GitHub**
 ```bash
-git clone https://github.com/your-username/copilot-workflow-composer.git
+git clone https://github.com/Ayush-CS-89112521/Copilot-Workflow-Composer-CWC-.git
 cd copilot-workflow-composer
 ```
 - [ ] Repository cloned

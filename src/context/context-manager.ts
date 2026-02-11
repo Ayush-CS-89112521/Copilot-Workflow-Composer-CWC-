@@ -1,6 +1,10 @@
 /**
- * Context Manager - Manages execution state and persistence
- * Handles runId generation, variable storage, and output persistence
+ * Execution Context Orchestrator
+ * 
+ * Manages the formal state and telemetry of active workflows. Responsibilities:
+ * - ACID-compliant persistence (Atomic Switch pattern) for crash-safe execution.
+ * - Real-time variable resolution and output aliasing.
+ * - Run-level directory management and multi-tenant isolation.
  */
 
 import { mkdir, writeFile, appendFile } from 'fs/promises';
@@ -311,10 +315,10 @@ export async function finalizeExecution(
   // Execute in sequence (not parallel) to maintain atomic semantics
   // Context is most critical - write first so recovery is possible
   await persistContext(context);
-  
+
   // Metadata is secondary
   await persistExecutionMetadata(context, success, errors);
-  
+
   // Index is tertiary - failure here doesn't lose context
   await appendToRunsIndex(context, success);
 }

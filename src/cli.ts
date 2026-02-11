@@ -81,7 +81,7 @@ Examples:
   cwc "Create a new API endpoint" --plan --auto-approve --auto-switch
 
 Documentation:
-  https://github.com/your-repo/copilot-workflow-composer
+  https://github.com/Ayush-CS-89112521/Copilot-Workflow-Composer-CWC-
 `);
 }
 
@@ -1391,6 +1391,15 @@ function detectInputType(input: string): { isFile: boolean; path?: string; promp
   return { isFile: false, prompt: input };
 }
 
+/**
+ * Primary Application Entry Point.
+ * Orchestrates the full lifecycle of the CWC CLI:
+ * 1. Environment and Authorization Pre-flight.
+ * 2. Multi-mode argument parsing (Workflow vs Prompt).
+ * 3. Planning Phase (Architect Agent) instantiation.
+ * 4. Execution Phase (Builder Agent) orchestration.
+ * 5. Telemetry aggregation and process exit management.
+ */
 async function main(): Promise<void> {
   const args = process.argv.slice(2); // Skip 'bun' and script path
 

@@ -28,6 +28,10 @@
   ],
   "author": "Copilot Hackathon Team",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ayush-CS-89112521/Copilot-Workflow-Composer-CWC-.git"
+  },
   "dependencies": {
     "@xenova/transformers": "^2.17.2",
     "chalk": "^5.3.0",

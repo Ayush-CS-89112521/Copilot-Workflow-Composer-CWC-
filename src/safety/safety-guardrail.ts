@@ -1,6 +1,13 @@
 /**
- * Safety Guardrail Interceptor
- * Scans step outputs for dangerous patterns before variable persistence
+ * Safety Guardrail Interceptor - Multi-Layer Validation Framework
+ * 
+ * Implements a defense-in-depth architecture covering:
+ * 1. Pattern Matching (Recursive, destructive, and exfiltration patterns).
+ * 2. Bayesian Confidence Thresholding (Context-specific risk assessment).
+ * 3. Human Gate Integration (Interactive steering and pause logic).
+ * 4. Secret Masking & Obfuscation Detection.
+ * 
+ * Scans workflow telemetry for dangerous patterns before state persistence.
  */
 
 import { SafetyPolicy, SafetyViolation, SafetyScanResult } from '../types/index';

@@ -1,8 +1,12 @@
 /**
- * Workflow Engine - Orchestrates multi-step workflow execution
- * Coordinates context management, step execution, error handling, and safety checks
- * Supports conditional branching and resource monitoring
- * Integrates UI components for visual progress feedback
+ * Workflow Engine - Core Execution Orchestrator
+ * 
+ * Implements the primary execution logic for multi-step automation.
+ * Features:
+ * - Topological dependency resolution.
+ * - ACID-compliant persistence (Atomic Switch pattern).
+ * - Multi-layer safety guardrail integration.
+ * - Integrated terminal UI telemetry.
  */
 
 import {
@@ -60,12 +64,15 @@ export interface WorkflowExecutionOptions {
 }
 
 /**
- * Execute a workflow from start to finish
- * Orchestrates step execution, manages context, and handles errors
- *
- * @param workflow - The workflow to execute
- * @param options - Execution options (overrides)
- * @returns An execution report with results and final context
+ * Primary workflow execution gateway.
+ * Orchestrates the full lifecycle of a multi-step workflow including:
+ * - State initialization and ACID-compliant persistence.
+ * - Resource monitoring and safety guardrail enforcement.
+ * - Real-time UI telemetry and error recovery.
+ * 
+ * @param workflow - The validated workflow structure to execute.
+ * @param options - Runtime execution overrides (timeout, etc).
+ * @returns Comprehensive execution report with results and final context.
  */
 export async function executeWorkflow(
   workflow: Workflow,
@@ -86,7 +93,7 @@ export async function executeWorkflow(
   try {
     const githubAuth = verifyGithubCopilotAuth();
     context.githubAuth = githubAuth;
-    
+
     // Log authentication status
     const authMessage = getAuthStatusMessage();
     console.log('\n' + authMessage + '\n');

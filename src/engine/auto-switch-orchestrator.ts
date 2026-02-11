@@ -1,7 +1,11 @@
 /**
- * Auto-Switch Orchestrator: Phase 6 Integration
- * Orchestrates the complete flow: Plan → Validate → Convert → Execute
- * Seamlessly switches between Architect (planning) and Builder (execution) modes
+ * Auto-Switch Orchestrator: Phase 6 Hybrid Execution Engine
+ * 
+ * Implements the Architect-Builder design pattern, orchestrating:
+ * 1. Strategic Planning (Architect Phase via gh copilot).
+ * 2. Human-in-the-Loop Validation (Steering Phase).
+ * 3. Contextual Tool Injection (Optimization Phase).
+ * 4. High-Efficiency Execution (Builder Phase via Haiku/Sonnet).
  */
 
 import { ArchitectPlan } from '../types/architect';

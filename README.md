@@ -9,6 +9,8 @@
 
 > 🏆 **GitHub Copilot CLI Hackathon Submission** - Demonstrating how to extend `gh copilot suggest` with enterprise-ready workflows, safety architecture, and intelligent tool discovery.
 
+![CWC Demo](assets/demos/demo.gif)
+
 ---
 
 ## 🎯 The Problem

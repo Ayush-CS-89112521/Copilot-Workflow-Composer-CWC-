@@ -7,23 +7,15 @@
 import { ExecutionContext, ConditionEvaluationResult } from '../types/index.js';
 
 /**
- * Evaluates a condition expression against the execution context
- * Supports variable references and safe method calls
- *
- * @param condition The condition expression to evaluate (e.g., "${steps.x.includes('y')}")
- * @param context The execution context containing variables and results
- * @returns Evaluation result with boolean outcome
- *
- * @throws Error if condition syntax is invalid or evaluation fails
- *
- * @example
- * const result = evaluateCondition(
- *   "${steps.analyze.output.includes('vulnerability')}",
- *   context
- * );
- * if (!result.evaluated) {
- *   console.log('Step will be skipped');
- * }
+ * Evaluates a domain-specific condition expression using a safe, non-eval based parser.
+ * Implements an LL(1) recursive descent grammar supporting:
+ * - Variable resolution (steps.*, variables.*)
+ * - Property/Method access with safe isolation.
+ * - Complex logical combinations (&&, ||) and comparison operators.
+ * 
+ * @param condition - The raw expression string wrapped in ${...}.
+ * @param context - The global execution context for variable resolution.
+ * @returns Result object containing the boolean outcome or evaluation telemetry.
  */
 export function evaluateCondition(
   condition: string,

@@ -247,8 +247,8 @@ You'll know setup is complete when:
 
 - **[INSTALLATION.md](INSTALLATION.md)** - Complete installation guide (START HERE)
 - **[README.md](../../README.md)** - Project overview
-- **[GitHub Issues](https://github.com/your-repo/issues)** - Report problems
-- **[GitHub Discussions](https://github.com/your-repo/discussions)** - Ask questions
+- **[GitHub Issues](https://github.com/Ayush-CS-89112521/Copilot-Workflow-Composer-CWC-/issues)** - Report problems
+- **[GitHub Discussions](https://github.com/Ayush-CS-89112521/Copilot-Workflow-Composer-CWC-/discussions)** - Ask questions
 
 ---
 
